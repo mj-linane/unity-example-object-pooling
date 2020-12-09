@@ -1,33 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
+﻿using UnityEngine;
 
 public class CubeManager : MonoBehaviour
 {
-    private float spawnRangeX = 10;
-    private float spawnRangeMinZ = -15;
-    private float spawnRangeMaxZ = -25;
-    private float startTime = 1;
-    private float repeatTime = .5f;
+    private readonly float repeatTime = .5f;
+    private readonly float spawnRangeMaxZ = -25;
+    private readonly float spawnRangeMinZ = -15;
+    private readonly float spawnRangeX = 10;
+    private readonly float startTime = 1;
 
-    void Start()
+    private void Start()
     {
         InvokeRepeating(nameof(SpawnCubes), startTime, repeatTime);
     }
 
- 
-    void SpawnCubes()
+
+    private void SpawnCubes()
     {
-        Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 2, Random.Range(spawnRangeMinZ, spawnRangeMaxZ));
-        GameObject cube = ObjectPooler.SharedInstance.GetPooledObjects();
+        var spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 2,
+            Random.Range(spawnRangeMinZ, spawnRangeMaxZ));
+        var cube = ObjectPooler.SharedInstance.GetPooledObjects();
         if (cube != null)
         {
             cube.transform.position = spawnPos;
             cube.SetActive(true);
         }
-        
-        
     }
 }
